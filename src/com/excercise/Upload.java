@@ -9,10 +9,10 @@ public class Upload {
     private Scanner scan;
     private File file;
     private Environment environment;
-    private ArrayList<Environment> values = new ArrayList<>();
+    private ArrayList<Environment> environmentObjectList = new ArrayList<>();
 
-    public void readFile() throws FileNotFoundException, NoResultException {
-        this.file = new File("c:/Environmental_Data_Deep_Moor_2013.txt");
+    public void readFile(String path) throws FileNotFoundException, NoResultException {
+        this.file = new File(path);
         this.scan = new Scanner(this.file);
         boolean firstLine = true;
         while(this.scan.hasNext()){
@@ -20,7 +20,7 @@ public class Upload {
                 this.scan.nextLine();
                 firstLine = false;
             }
-            String line = this.scan.nextLine();
+            String line = this.scan.nextLine(); //verify this gets the first line and not the second one
             environment = new Environment(
                     line.substring(0,10).trim(),
                     line.substring(11,19).trim(),
@@ -30,12 +30,18 @@ public class Upload {
                     line.substring(38,43).trim(),
                     line.substring(44,50).trim(),
                     line.substring(51,56).trim(),
-                    line.substring(57,line.length()).trim()
+                    line.substring(56,line.length()).trim()
             );
-            values.add(environment);
+            this.environmentObjectList.add(environment);
 //            environment.printEnvironmentInfo();
         }
-        environment.setMetrics(this.values);
-        System.out.println("Total: " + environment.getMetrics());
+    }
+
+    public Environment getEnvironment() {
+        return environment;
+    }
+
+    public ArrayList<Environment> getEnvironmentObjectList() {
+        return environmentObjectList;
     }
 }

@@ -12,8 +12,16 @@ public class Environment {
     private String wind_dir;
     private String wind_gust;
     private String wind_speed;
-    private ArrayList<Environment> values = new ArrayList<>();
-    private Metrics metric = new Metrics();
+    private double Air_Temp_avg;
+    private double Air_Temp_median;
+    private double Barometric_Press_avg;
+    private double Barometric_Press_median;
+    private double Wind_Speed_avg;
+    private double Wind_Speed_median;
+    private ArrayList<Environment> environmentObjectList = new ArrayList<>();
+    private Metrics metric;
+
+    public Environment(){}
 
     public Environment(String date, String time, String air_temp, String barometric_press, String dew_point, String relative_humidity, String wind_dir, String wind_gust, String wind_speed){
         this.date = date;
@@ -42,20 +50,12 @@ public class Environment {
         );
     }
 
-    public void setEnvironmentValuesList(ArrayList<Environment> values){
-        this.values.addAll(values);
+    public void setEnvironmentObjectList(ArrayList<Environment> environmentObjectList) throws NoResultException {
+        this.metric = new Metrics(environmentObjectList);
     }
 
-    public ArrayList<Environment> getEnvironmentValuesList(){
-        return this.values;
-    }
-
-    public void setMetrics(ArrayList<Environment> values) throws NoResultException {
-        metric.setTotal(values);
-    }
-
-    public double getMetrics(){
-        return metric.getTotal();
+    public ArrayList<Environment> getEnvironmentObjectList(){
+        return this.environmentObjectList;
     }
 
     public String getDate() {
@@ -128,5 +128,29 @@ public class Environment {
 
     public void setWind_speed(String wind_speed) {
         this.wind_speed = wind_speed;
+    }
+
+    public double getAir_Temp_avg() {
+        return this.metric.getAir_Temp_avg();
+    }
+
+    public double getAir_Temp_median() {
+        return this.metric.getAir_Temp_median();
+    }
+
+    public double getBarometric_Press_avg() {
+        return this.metric.getBarometric_Press_avg();
+    }
+
+    public double getBarometric_Press_median() {
+        return this.metric.getBarometric_Press_median();
+    }
+
+    public double getWind_Speed_avg() {
+        return this.metric.getWind_Speed_avg();
+    }
+
+    public double getWind_Speed_median() {
+        return this.metric.getWind_Speed_median();
     }
 }
